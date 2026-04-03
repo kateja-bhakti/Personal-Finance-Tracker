@@ -1,0 +1,64 @@
+:root {
+  --bg: #070b17;
+  --surface-1: #0c1224;
+  --surface-2: #111833;
+  --surface-3: #1a2347;
+
+  --text: #e0e7ff;
+  --subtext: #8fa0d6;
+
+  --border: rgba(255,255,255,0.12);
+  --accent-soft: rgba(99,102,241,0.2);
+
+  --income: #4ade80;
+  --expense: #f87171;
+
+  --shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* USER LIGHT */
+body.light {
+  --bg: #f3f5ff;
+  --surface-1: #ffffff;
+  --surface-2: #eef1ff;
+  --surface-3: #dde3ff;
+
+  --text: #1e293b;
+  --subtext: #5b6aa5;
+
+  --border: rgba(0,0,0,0.08);
+  --accent-soft: rgba(99,102,241,0.1);
+}
+
+/* ADMIN DARK */
+body.admin {
+  --bg: #140a0a;
+  --surface-1: #1f1111;
+  --surface-2: #2a1818;
+  --surface-3: #3a2222;
+
+  --text: #ffe4e6;
+  --subtext: #fca5a5;
+
+  --border: rgba(255,100,100,0.2);
+  --accent-soft: rgba(248,113,113,0.2);
+
+  --income: #34d399;
+  --expense: #fb7185;
+
+  --shadow: 0 10px 25px rgba(255,0,0,0.2);
+}
+
+/* ADMIN LIGHT */
+body.admin.light {
+  --bg: #fff1f2;
+  --surface-1: #ffe4e6;
+  --surface-2: #fecdd3;
+  --surface-3: #fda4af;
+
+  --text: #7f1d1d;
+  --subtext: #991b1b;
+
+  --border: rgba(127,29,29,0.2);
+  --accent-soft: rgba(248,113,113,0.2);
+}
