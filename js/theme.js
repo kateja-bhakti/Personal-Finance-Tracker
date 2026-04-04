@@ -2,23 +2,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
 lucide.createIcons();
 
+// ================= FLIP CARDS =================
+const flipCards = document.querySelectorAll(".flip-card");
+
+// Automatic flip: cycle through cards one by one every 3s
+let autoFlipIndex = 0;
+
+setInterval(() => {
+  if (flipCards.length === 0) return;
+
+  // Remove 'active' from all cards first
+  flipCards.forEach(card => card.classList.remove("active"));
+
+  // Flip current card
+  flipCards[autoFlipIndex].classList.add("active");
+
+  // Move to next card
+  autoFlipIndex = (autoFlipIndex + 1) % flipCards.length;
+}, 3000);
+
+// Individual flip on click
+flipCards.forEach(card => {
+  card.addEventListener("click", () => {
+    card.classList.toggle("active");
+  });
+});
 // THEME
 document.querySelector(".theme-toggle").onclick = () => {
 document.body.classList.toggle("light");
 };
 
-// ROLE
-const roleBtn = document.getElementById("roleToggle");
-
-roleBtn.onclick = () => {
-if(roleBtn.textContent === "User"){
-roleBtn.textContent = "Admin";
-document.body.classList.add("admin");
-}else{
-roleBtn.textContent = "User";
-document.body.classList.remove("admin");
-}
-};
 
 // FILTER + SEARCH
 const search = document.getElementById("searchInput");
