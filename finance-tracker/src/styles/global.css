@@ -1,0 +1,436 @@
+/* --- 1. VARIABLES & RESET --- */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --radius-lg: 24px;
+  --radius-md: 12px;
+  --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  /* The colors are pulled from variables.css via the class on body */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+  background: var(--bg-main);
+  color: var(--text-main);
+  overflow-x: hidden;
+  transition: background 0.3s ease;
+}
+
+/* --- 2. MAIN LAYOUT ENGINE (The Anti-Overlap Fix) --- */
+.main-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.sidebar {
+  width: 260px;
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 100;
+}
+
+.dashboard-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto; /* Allows the main area to scroll while sidebar stays fixed */
+  background: var(--bg-main);
+}
+
+.view-container {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem; /* CRITICAL: This prevents boxes from touching/overlapping */
+}
+
+/* --- 3. HEADER & NAVBAR --- */
+.main-header {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+
+.header-left { display: flex; align-items: center; gap: 15px; }
+.brand-logo { color: var(--accent); font-weight: 900; font-size: 1.4rem; letter-spacing: -1px; }
+.header-right { display: flex; gap: 20px; align-items: center; }
+.v-divider { width: 1px; height: 24px; background: var(--border); }
+
+/* --- 4. SIDEBAR NAVIGATION --- */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 3rem;
+}
+
+.brand-name { font-weight: 800; font-size: 1.2rem; }
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  border-radius: var(--radius-md);
+  color: var(--text-sub);
+  background: transparent;
+  border: none;
+  width: 100%;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.nav-link:hover, .nav-link.active {
+  background: var(--bg-main);
+  color: var(--accent);
+  transform: translateX(5px);
+}
+
+.nav-link.logout { margin-top: auto; color: var(--expense); }
+
+/* --- 5. STAT CARDS & FLIP ANIMATION --- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.flip-card { height: 160px; perspective: 1000px; cursor: pointer; }
+.flip-inner { 
+  position: relative; width: 100%; height: 100%; 
+  transition: transform 0.6s; transform-style: preserve-3d; 
+}
+.flip-card:hover .flip-inner { transform: rotateX(180deg); }
+
+.card-base {
+  position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+  background: var(--bg-card); border-radius: var(--radius-lg); padding: 1.5rem;
+  box-shadow: var(--shadow); border: 1px solid var(--border);
+}
+
+.flip-back { 
+  transform: rotateX(180deg); display: flex; align-items: center; 
+  justify-content: center; flex-direction: column; background: var(--accent); color: white;
+}
+
+.card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.card-value { font-size: 2.2rem; font-weight: 800; }
+
+/* --- 6. CHARTS SECTION --- */
+.charts-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.chart-box {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  height: 350px;
+  transition: var(--transition);
+  position: relative;
+  box-shadow: var(--shadow);
+}
+
+.chart-box:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent);
+}
+
+.chart-content { height: 250px; }
+
+/* --- 7. TRANSACTIONS TABLE --- */
+.table-section {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.table-controls {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.search-box {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-main); padding: 12px 18px;
+  border-radius: 14px; border: 1px solid var(--border);
+  min-width: 300px;
+}
+
+.search-box input {
+  background: transparent; border: none; outline: none;
+  color: var(--text-main); width: 100%;
+}
+
+.table-responsive { width: 100%; overflow-x: auto; }
+
+table { width: 100%; border-collapse: collapse; }
+
+th {
+  background: var(--bg-main); padding: 1.2rem;
+  text-align: left; font-size: 0.8rem; color: var(--text-sub);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+
+td { padding: 1.2rem; border-bottom: 1px solid var(--border); }
+
+.category-pill {
+  padding: 5px 12px; background: var(--bg-main);
+  border-radius: 20px; font-size: 0.8rem; border: 1px solid var(--border);
+}
+
+.status-pill {
+  padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: 800;
+}
+.status-pill.income { background: rgba(34, 197, 94, 0.1); color: var(--income); }
+.status-pill.expense { background: rgba(239, 68, 68, 0.1); color: var(--expense); }
+
+/* --- 8. SMART INSIGHTS --- */
+.insights-section {
+  background: var(--bg-card);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.insight-card {
+  background: var(--bg-main);
+  padding: 1.5rem;
+  border-radius: 18px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  border: 1px solid var(--border);
+  transition: 0.3s;
+}
+
+/* --- 9. SIDE PANEL (MODAL) --- */
+.side-panel-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4); backdrop-filter: blur(6px);
+  z-index: 2000; visibility: hidden; opacity: 0; transition: 0.4s;
+}
+.side-panel-overlay.open { visibility: visible; opacity: 1; }
+
+.side-panel {
+  position: absolute; right: -450px; top: 0; width: 420px; height: 100%;
+  background: var(--bg-card); padding: 3rem 2rem;
+  border-left: 1px solid var(--border); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+}
+.side-panel-overlay.open .side-panel { right: 0; }
+
+.panel-header { display: flex; justify-content: space-between; margin-bottom: 2.5rem; }
+
+.input-group { margin-bottom: 1.5rem; }
+.input-group label { display: block; font-size: 0.85rem; color: var(--text-sub); margin-bottom: 8px; font-weight: 600; }
+.input-group input, .input-group select {
+  width: 100%; padding: 14px; border-radius: 12px; background: var(--bg-main);
+  border: 1px solid var(--border); color: var(--text-main); font-size: 1rem;
+}
+
+.type-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.type-toggle button {
+  padding: 12px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--bg-main); color: var(--text-sub); cursor: pointer; transition: 0.2s;
+}
+.type-toggle button.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+.submit-btn-premium {
+  width: 100%; padding: 16px; background: var(--accent); color: white;
+  border-radius: 14px; font-weight: 700; border: none; cursor: pointer;
+  margin-top: 1rem; box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+}
+
+/* --- 10. TOAST & ANIMATIONS --- */
+.toast-notification {
+  position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
+  background: var(--income); color: white; padding: 14px 28px;
+  border-radius: 50px; display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2); z-index: 9999;
+  animation: slideDown 0.4s ease forwards;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translate(-50%, -20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.table-row-animate { animation: fadeIn 0.4s ease forwards; }
+
+/* --- 11. RESPONSIVE DESIGN --- */
+@media (max-width: 1100px) {
+  .sidebar { width: 85px; padding: 2rem 0.5rem; }
+  .brand-name, .nav-link span, .role-label { display: none; }
+  .nav-link { justify-content: center; }
+  .charts-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .main-layout { flex-direction: column; }
+  .sidebar {
+    width: 100%; height: auto; position: fixed; bottom: 0; top: auto;
+    flex-direction: row; justify-content: space-around;
+    padding: 10px; border-right: none; border-top: 1px solid var(--border);
+    border-radius: 24px 24px 0 0;
+  }
+  .sidebar-header { display: none; }
+  .dashboard-content { height: calc(100vh - 70px); }
+  .view-container { padding: 1.2rem; gap: 1.5rem; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .side-panel { width: 100%; }
+}
+/* --- DARK MODE TEXT FIX --- */
+.dark {
+  --text-main: #f8fafc; /* Forced light text for dark theme */
+  --text-sub: #94a3b8;
+  --bg-main: #020617;
+  --bg-card: #0f172a;
+  --border: #1e293b;
+}
+
+/* --- TABLE CONTROLS FIX --- */
+.table-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  border-radius: 20px 20px 0 0;
+}
+
+.search-box {
+  flex: 1;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-main);
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.filter-pills {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-pill-btn {
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: var(--bg-main);
+  border: 1px solid var(--border);
+  color: var(--text-sub);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.filter-pill-btn.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+/* --- CHART ZOOM (FULL SCREEN) --- */
+.chart-zoom-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(15px);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+}
+
+.chart-zoom-content {
+  flex: 1;
+  background: var(--bg-card);
+  border-radius: 30px;
+  padding: 40px;
+}
+
+/* --- SIDEBAR COLLAPSE LOGIC --- */
+.sidebar.collapsed {
+  width: 80px;
+}
+.sidebar.collapsed .brand-name, 
+.sidebar.collapsed .nav-link span {
+  display: none;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    width: 100% !important;
+    height: 70px;
+    flex-direction: row;
+    padding: 0 10px;
+  }
+  .sidebar-header, .nav-divider { display: none; }
+  .sidebar-nav {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+  }
+  .nav-link { margin: 0; padding: 10px; }
+  .view-container { padding: 15px; padding-bottom: 90px; }
+}
+.chart-content {
+  height: 250px;
+}
+
+.modal-body {
+  height: 400px;
+}

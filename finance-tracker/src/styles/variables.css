@@ -1,0 +1,53 @@
+/* src/styles/variables.css */
+
+:root {
+  /* SHARED VALUES */
+  --transition-speed: 0.4s;
+  --radius: 16px;
+  --income-color: #22c55e;
+  --expense-color: #ef4444;
+}
+
+/* 1. USER LIGHT (Indigo/White) */
+.app-user.light {
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #1e293b;
+  --text-sub: #64748b;
+  --accent: #6366f1;
+  --border: #e2e8f0;
+  --shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+/* 2. USER DARK (Deep Navy/Indigo) */
+.app-user.dark {
+  --bg-main: #0f172a;
+  --bg-card: #1e293b;
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --accent: #818cf8;
+  --border: #334155;
+  --shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
+}
+
+/* 3. ADMIN LIGHT (Teal/Mint) */
+.app-admin.light {
+  --bg-main: #f0fdfa;
+  --bg-card: #ffffff;
+  --text-main: #134e4a;
+  --text-sub: #2d6a4f;
+  --accent: #0d9488;
+  --border: #ccfbf1;
+  --shadow: 0 10px 15px -3px rgba(13,148,136,0.1);
+}
+
+/* 4. ADMIN DARK (Obsidian/Teal) */
+.app-admin.dark {
+  --bg-main: #020617;
+  --bg-card: #0f172a;
+  --text-main: #f0fdfa;
+  --text-sub: #5eead4;
+  --accent: #2dd4bf;
+  --border: #1e293b;
+  --shadow: 0 10px 15px -3px rgba(0,0,0,0.7);
+}
