@@ -21,6 +21,19 @@
 .theme-switch.light { background: #87CEEB; }
 .theme-switch.dark { background: #1e293b; }
 
+/* Light Theme Border & Background */
+.theme-switch.light { 
+  background: #87CEEB; 
+  border-color: #475569;
+  box-shadow: 0 2px 10px rgba(7, 89, 133, 0.2); /* Subtle blue glow */ /* Deep sky blue border */
+}
+
+/* Dark Theme Border & Background */
+.theme-switch.dark { 
+  background: #1e293b; 
+  border-color: #f1f5f9; /* Off-white/Silver border to pop against dark bg */
+}
+
 .switch-handle {
   width: 24px;
   height: 24px;

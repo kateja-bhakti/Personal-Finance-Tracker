@@ -61,7 +61,7 @@ export default function App() {
                 <button
                   className="btn-add"
                   onClick={() => {
-                    setEditingItem(null); // IMPORTANT FIX
+                    setEditingItem(null); // Clear previous edits
                     setIsModalOpen(true);
                   }}
                 >
@@ -86,11 +86,8 @@ export default function App() {
             </div>
 
             <StatCards />
-
             <Charts />
-
             <TransactionTable onEdit={handleEdit} />
-
             <Insights />
 
           </div>

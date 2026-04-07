@@ -1,102 +1,115 @@
-💰 Personal-Finance-Tracker
+It looks like you have two different versions of the same README mixed together (one referencing `npm start` and another referencing `Vite`). I've consolidated them into a single, high-quality, professional README that highlights the tech stack, features, and role-based logic clearly.
 
-A sleek and modern dashboard to effortlessly track, manage, and visualize your personal finances. Designed to give users full control over their income and expenses with interactive charts, summary cards, and a user-friendly interface.
+-----
 
-✨ Key Features
-Add Transactions: Quickly log income or expenses.
-Delete Transactions: Remove entries instantly.
-Dark & Light Mode: Toggle themes for comfortable viewing.
-Summary Cards: Monitor total income, total expenses, and balance at a glance.
-Interactive Charts: Visualize your spending trends.
-Responsive Design: Perfectly optimized for desktop, tablet, and mobile.
-Real-Time Updates: All changes reflect immediately on cards and charts.
+# 💰 FinanceFlow: Personal Finance Tracker
 
-📂 Project Structure
-finance-dashboard/
-│
-├─ public/
-│   └─ index.html
-│
-├─ src/
-│   ├─ components/
-│   │   ├─ Card.jsx
-│   │   ├─ Sidebar.jsx
-│   │   ├─ TransactionForm.jsx
-│   │   └─ Charts.jsx
-│   │
-│   ├─ css/
-│   │   ├─ global.css
-│   │   └─ variables.css
-│   │
-│   ├─ js/
-│   │   └─ theme.js
-│   │
-│   ├─ main.jsx
-│   └─ App.jsx
-│
-├─ package.json
-└─ README.md
+A sleek, modern dashboard designed to help users effortlessly track, manage, and visualize their personal finances. Built with **React** and **Tailwind CSS**, FinanceFlow provides real-time insights into spending habits with a focus on speed and user experience.
 
-Live working link: https://personal-finance-tracker-npte.vercel.app/
-🚀 Getting Started
+[Link to Live Demo](https://personal-finance-tracker-npte.vercel.app/)
 
-1️⃣ Clone the Repository
+-----
+
+## ✨ Features
+
+### 📊 Comprehensive Dashboard
+
+  * **Summary Cards:** Instantly monitor total income, total expenses, and your current balance.
+  * **Interactive Analytics:** Visualize spending trends using responsive charts (Monthly Income vs. Expenses).
+  * **Real-Time Updates:** All changes reflect immediately across cards and charts.
+
+### 🔐 Role-Based Access
+
+  * **User Role:** Access to the dashboard, analytics, and transaction history.
+  * **Admin Role:** Elevated permissions to add new entries, manage all transactions, and clear data permanently.
+
+### 🎨 Premium UI/UX
+
+  * **Theme Toggle:** Seamless transition between **Dark & Light modes** with persistent CSS variables.
+  * **Responsive Design:** Fully optimized for Desktop, Tablet, and Mobile devices.
+  * **Export Data:** Quickly export your financial records as **CSV or JSON**.
+
+-----
+
+## 🛠 Tech Stack
+
+  * **Frontend:** [React.js](https://reactjs.org/)
+  * **Styling:** [Tailwind CSS](https://tailwindcss.com/) & CSS Variables
+  * **Icons:** [Lucide React](https://lucide.dev/)
+  * **State Management:** React Context API
+  * **Build Tool:** [Vite](https://vitejs.dev/)
+  * **Deployment:** Vercel
+
+-----
+
+## 📂 Project Structure
+
+```text
+finance-tracker/
+├── public/              # Static assets
+├── src/
+│   ├── components/      # UI Components (Sidebar, Navbar, Cards, etc.)
+│   ├── context/         # Global State (FinanceContext.jsx)
+│   ├── styles/          # Theme variables & Global CSS
+│   ├── js/              # Theme & Helper logic
+│   ├── App.jsx          # Main App Logic
+│   └── main.jsx         # Entry point
+├── package.json
+└── README.md
+```
+
+-----
+
+## ⚡ Getting Started
+
+### 1\. Clone the Repository
+
+```bash
 git clone <your-repo-url>
-cd finance-dashboard
+cd finance-tracker
+```
 
-2️⃣ Install Dependencies
+### 2\. Install Dependencies
+
+```bash
 npm install
+```
 
-3️⃣ Run the Dashboard Locally
-npm start
+### 3\. Run Development Server
 
-Open http://localhost:3000
- in your browser.
+```bash
+npm run dev
+```
 
-4️⃣ Build for Production
+Open [http://localhost:5173](https://www.google.com/search?q=http://localhost:5173) in your browser.
+
+### 4\. Build for Production
+
+```bash
 npm run build
+```
 
-The optimized production files will appear in the build/ folder.
+-----
 
-🛠 How to Use
+## 🎯 How to Use
 
-Add a Transaction
-Click “Add Transaction”.
-Enter:
-Title / Description
-Amount
-Type: Income or Expense
-Date
-Click Save → Summary cards and charts update instantly.
-Delete a Transaction
-Hover and click the delete icon.
-The dashboard updates automatically.
-Switch Dark/Light Mode
-Click the sun/moon icon at the top-right.
-All elements, including charts and icons, adapt automatically.
-View Summary
-Income: Total money received
-Expenses: Total money spent
-Balance: Income minus expenses
-Explore Interactive Charts
-Analyze your monthly income vs. expenses.
-Hover over graph bars or pie sections for exact amounts.
+1.  **Toggle Roles:** Use the Navbar to switch between **User** and **Admin** views.
+2.  **Add Transactions (Admin):** Click the "New Entry" button in the Sidebar. Enter the title, amount, and type (Income/Expense).
+3.  **Analyze Trends:** Hover over the interactive charts to see exact amounts for specific timeframes.
+4.  **Exporting:** Navigate to **Sidebar \> Export** to generate a data log in the console (ready for CSV/JSON integration).
+5.  **Theme Switch:** Use the Sun/Moon icon in the Navbar to toggle the visual theme.
 
-💡 Pro Tips
-Use descriptive titles for transactions for easier tracking.
-Check charts regularly to identify spending habits.
-Switch themes based on the time of day for better visibility.
-The app is fast and client-side, no backend required.
+-----
 
-⚙️ Customization (Optional)
-Change theme colors in variables.css
-Add new charts or graphs in Charts.jsx
-Use SVG icons for theme-aware logos
+## 📝 Key Implementation Details
 
-📌 Notes
-Fully client-side, no backend needed.
-Transactions exist only in the browser session unless storage is added.
+  * **Context API:** Used for global state management of transactions, user roles, and theme settings to avoid "prop drilling."
+  * **CSS Variables:** Centralized in `variables.css` to allow for instant, app-wide theme switching.
+  * **Client-Side Only:** This version is fully functional in-browser. Note that data is currently stored in the session/local state and will reset upon page refresh unless LocalStorage is implemented.
 
-📄 License
+-----
 
-MIT License – Free to use and modify.
+## 📄 License
+
+Distributed under the **MIT License**. See `LICENSE` for more information.
+

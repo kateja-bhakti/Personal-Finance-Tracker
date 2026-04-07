@@ -1,57 +1,103 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { FinanceContext } from '../../context/FinanceContext';
 import { 
-  LayoutDashboard, ReceiptText, PieChart, Settings, 
-  ShieldCheck, Download, Menu, X, FileJson, FileSpreadsheet 
+  LayoutDashboard, ReceiptText, PieChart, 
+  PlusCircle, Trash2, HardDriveDownload, FileSpreadsheet, FileJson 
 } from 'lucide-react';
 
 export default function Sidebar() {
-  const { role, transactions } = useContext(FinanceContext);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const { role, setTransactions } = useContext(FinanceContext);
+  const [showExport, setShowExport] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  // CSV Export Logic
-  const exportCSV = () => {
-    const headers = ["Date,Amount,Category,Type\n"];
-    const rows = transactions.map(t => `${t.date},${t.amount},${t.category},${t.type}`);
-    const blob = new Blob([headers + rows.join("\n")], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.setAttribute('href', url);
-    a.setAttribute('download', 'finance_report.csv');
-    a.click();
+  // Detect mobile width
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (isMobile) setMobileOpen(false);
   };
 
-  const menuItems = [
-    { icon: <LayoutDashboard />, label: 'Dashboard', roles: ['user', 'admin'] },
-    { icon: <ReceiptText />, label: 'Transactions', roles: ['user', 'admin'] },
-    { icon: <PieChart />, label: 'Insights', roles: ['user', 'admin'] },
-    { icon: <Settings />, label: 'Admin Panel', roles: ['admin'] },
-    { icon: <ShieldCheck />, label: 'User Logs', roles: ['admin'] },
-  ];
-
   return (
-    <aside className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
-      <div className="sidebar-header">
-        <div className="brand-icon">💎</div>
-        {!isCollapsed && <span className="brand-name">FinanceFlow</span>}
-        <button className="collapse-toggle" onClick={() => setIsCollapsed(!isCollapsed)}>
-          {isCollapsed ? <Menu size={18}/> : <X size={18}/>}
-        </button>
-      </div>
+    <>
+      {/* Mobile overlay */}
+      {isMobile && mobileOpen && (
+        <div className="sidebar-overlay mobile" onClick={() => setMobileOpen(false)}></div>
+      )}
 
-      <nav className="sidebar-nav">
-        {menuItems.filter(item => item.roles.includes(role)).map((item, index) => (
-          <button key={index} className="nav-link">
-            {item.icon}
-            {!isCollapsed && <span>{item.label}</span>}
+      <aside className={`premium-sidebar ${isMobile ? 'mobile' : ''} ${mobileOpen ? 'open' : ''}`}>
+        <div className="sidebar-brand">
+          <div className="abstract-logo"></div>
+        </div>
+
+        <nav className="sidebar-nav">
+          <button className="nav-link" onClick={() => scrollTo('stats-section')}>
+            <LayoutDashboard size={22} />
+            <span>Dashboard</span>
           </button>
-        ))}
-        
-        <button className="nav-link export" onClick={exportCSV}>
-          <FileSpreadsheet size={20}/>
-          {!isCollapsed && <span>Export CSV</span>}
+          <button className="nav-link" onClick={() => scrollTo('charts-section')}>
+            <PieChart size={22} />
+            <span>Analytics</span>
+          </button>
+          <button className="nav-link" onClick={() => scrollTo('table-section')}>
+            <ReceiptText size={22} />
+            <span>Transactions</span>
+          </button>
+
+          <div className="nav-separator"></div>
+
+          {/* Export Stack */}
+          <div className="export-wrapper">
+            <button className="nav-link" onClick={() => setShowExport(!showExport)}>
+              <HardDriveDownload size={22} />
+              <span>Export Data</span>
+            </button>
+            {showExport && (
+              <div className="export-stack">
+                <button onClick={() => console.log('CSV')}>
+                  <FileSpreadsheet size={20} /><span>CSV</span>
+                </button>
+                <button onClick={() => console.log('JSON')}>
+                  <FileJson size={20} /><span>JSON</span>
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div className="flex-spacer"></div>
+
+          {/* Admin Actions */}
+          {role === 'admin' && (
+            <div className="bottom-stack admin-power-stack">
+              <button className="admin-btn add-btn" onClick={() => window.dispatchEvent(new CustomEvent('openAdminModal'))}>
+                <PlusCircle size={22} /><span>New Entry</span>
+              </button>
+              <button className="admin-btn clear-btn" onClick={() => { if (window.confirm("Permanent Wipe?")) setTransactions([]) }}>
+                <Trash2 size={22} /><span>Clear All Data</span>
+              </button>
+            </div>
+          )}
+
+          {/* Theme Toggle Placeholder */}
+          <button className="theme-toggle-btn">
+            {/* Add Sun/Moon icon */}
+          </button>
+        </nav>
+      </aside>
+
+      {/* Mobile Toggle Button */}
+      {isMobile && (
+        <button className="mobile-toggle-btn" onClick={() => setMobileOpen(!mobileOpen)}>
+          ☰
         </button>
-      </nav>
-    </aside>
+      )}
+    </>
   );
 }
